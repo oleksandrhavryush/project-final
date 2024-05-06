@@ -1,0 +1,10 @@
+spring.cache.type: none
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+
+  liquibase:
+    change-log: "classpath:h2/changelog-testH2.sql"

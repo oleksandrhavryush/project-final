@@ -142,6 +142,12 @@
             <artifactId>junit-platform-launcher</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -183,6 +189,7 @@
             <properties>
                 <spring.profiles.active>prod</spring.profiles.active>
             </properties>
+
             <build>
                 <plugins>
                     <plugin>
@@ -194,6 +201,27 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+
+        <profile>
+            <id>dev</id>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>testPostgres</id>
+            <properties>
+                <spring.profiles.active>testPostgres</spring.profiles.active>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>testH2</id>
+            <properties>
+                <spring.profiles.active>testH2</spring.profiles.active>
+            </properties>
         </profile>
     </profiles>
 </project>
