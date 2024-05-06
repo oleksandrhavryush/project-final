@@ -7,6 +7,10 @@ app:
     max-pool-size: 100
 
 spring:
+  profiles:
+    active: @spring.profiles.active@
+  config:
+    import: optional:file:.env[.properties]
   init:
     mode: never
   jpa:
@@ -25,9 +29,9 @@ spring:
         # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
         jdbc.batch_size: 20
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${DATASOURCE_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   liquibase:
     changeLog: "classpath:db/changelog.sql"
@@ -85,9 +89,9 @@ spring:
           starttls:
             enable: true
           auth: true
-    host: ${SPRING_MAIL_HOST}
-    username: ${SPRING_MAIL_USERNAME}
-    password: ${SPRING_MAIL_PASSWORD}
+    host: ${MAIL_HOST}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     port: 587
   thymeleaf.check-template-location: false
 
