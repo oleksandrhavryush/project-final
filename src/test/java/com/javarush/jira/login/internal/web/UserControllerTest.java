@@ -58,7 +58,7 @@ class UserControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {
-        UserTo newTo = mapper.toTo(getNew());
+        UserTo newTo = mapper.toTo(getNew2());
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(newTo, newTo.getPassword())))
@@ -66,7 +66,7 @@ class UserControllerTest extends AbstractControllerTest {
 
         User created = USER_MATCHER.readFromJson(action);
         long newId = created.id();
-        User newUser = getNew();
+        User newUser = getNew2();
         newUser.setId(newId);
         USER_MATCHER.assertMatch(created, newUser);
         USER_MATCHER.assertMatch(repository.getExisted(newId), newUser);
