@@ -34,10 +34,6 @@ public class UserTestData {
         return new User(null, "new@gmail.com", "newPassword", "newFirstName", "newLastName", "newDisplayName", Role.DEV);
     }
 
-    public static User getNew2() {
-        return new User(null, "newtest@gmail.com", "newPassword", "newFirstName", "newLastName", "newDisplayName", Role.DEV);
-    }
-
     public static User getUpdated() {
         return new User(USER_ID, USER_MAIL, "updatedPassword", "updatedFirstName", "updatedLastName",
                 "updatedDisplayName", Role.DEV, Role.ADMIN);
