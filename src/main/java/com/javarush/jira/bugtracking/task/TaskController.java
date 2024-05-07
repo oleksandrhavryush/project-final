@@ -107,6 +107,18 @@ public class TaskController {
         taskService.changeSprint(id, sprintId);
     }
 
+    @PatchMapping(path = "/{id}/add-tags")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addTags(@PathVariable long id, @RequestParam String... tags) {
+        taskService.addTags(id, tags);
+    }
+
+    @PatchMapping(path = "/{id}/remove-tags")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeTags(@PathVariable long id, @RequestParam String... tags) {
+        taskService.removeTags(id, tags);
+    }
+
     @GetMapping("/assignments/by-sprint")
     public List<UserBelong> getTaskAssignmentsBySprint(@RequestParam long sprintId) {
         log.info("get task assignments for user {} for sprint {}", AuthUser.authId(), sprintId);
