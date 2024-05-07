@@ -8,6 +8,8 @@ import com.javarush.jira.bugtracking.task.to.TaskToExt;
 import com.javarush.jira.bugtracking.task.to.TaskToFull;
 import com.javarush.jira.common.to.CodeTo;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,6 +57,10 @@ public class TaskTestData {
     public static final ActivityTo updatePriorityCode = new ActivityTo(ACTIVITY1_ID + 4, TASK2_ID, USER_ID, null, null, "ready_for_review", "high", "epic", "Trees UPD", "task UPD", 4, null);
     public static final List<ActivityTo> activityTosForTask2 = List.of(updatePriorityCode, activityTo1ForTask2);
 
+    public static final Activity activity1 = new Activity(ACTIVITY1_ID + 5, TASK1_ID, USER_ID, LocalDateTime.now(), null, IN_PROGRESS, null, null, null, null, null);
+    public static final Activity activity2 = new Activity(ACTIVITY1_ID + 6, TASK1_ID, USER_ID, LocalDateTime.now().plusMinutes(60), null, READY_FOR_REVIEW, null, null, null, null, null);
+    public static final Activity activity3 = new Activity(ACTIVITY1_ID + 7, TASK1_ID, USER_ID, LocalDateTime.now().plusMinutes(120), null, DONE, null, null, null, null, null);
+
     public static final UserBelong userTask1Assignment1 = new UserBelong(1L, TASK, USER_ID, "task_developer");
     public static final UserBelong userTask1Assignment2 = new UserBelong(1L, TASK, USER_ID, "task_tester");
     public static final UserBelong userTask2Assignment1 = new UserBelong(2L, TASK, USER_ID, "task_developer");
@@ -79,5 +85,13 @@ public class TaskTestData {
 
     public static ActivityTo getUpdatedActivityTo() {
         return new ActivityTo(ACTIVITY1_ID, TASK1_ID, USER_ID, null, null, "in_progress", "low", "epic", null, null, 3, null);
+    }
+
+    public static List<Activity> getUpdatedActivityCorrect() {
+        return List.of(activity3, activity2, activity1);
+    }
+
+    public static List<Activity> getUpdatedActivityIncorrect() {
+        return List.of(activity1);
     }
 }
