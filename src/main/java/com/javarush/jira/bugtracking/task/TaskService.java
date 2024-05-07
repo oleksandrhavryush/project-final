@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +34,10 @@ import static com.javarush.jira.ref.ReferenceService.getRefTo;
 public class TaskService {
     static final String CANNOT_ASSIGN = "Cannot assign as %s to task with status=%s";
     static final String CANNOT_UN_ASSIGN = "Cannot unassign as %s from task with status=%s";
+
+    static final String IN_PROGRESS_STATUS = "in_progress";
+    static final String READY_FOR_REVIEW_STATUS = "ready_for_review";
+    static final String DONE_STATUS = "done";
 
     private final Handlers.TaskExtHandler handler;
     private final Handlers.ActivityHandler activityHandler;
@@ -158,5 +163,33 @@ public class TaskService {
         task.getTags().removeAll(Set.of(tags));
         TaskToFull taskToFull = fullMapper.toTo(task);
         taskFullHandler.updateFromTo(taskToFull, id);
+    }
+
+    public Long calculateTimeInWork(Task task) {
+        return calculateTimeBetweenStatuses(task, IN_PROGRESS_STATUS, READY_FOR_REVIEW_STATUS);
+    }
+
+    public Long calculateTimeInTesting(Task task) {
+        return calculateTimeBetweenStatuses(task, READY_FOR_REVIEW_STATUS, DONE_STATUS);
+    }
+
+    private Long calculateTimeBetweenStatuses(Task task, String startStatus, String endStatus) {
+        List<Activity> activities = activityHandler.getRepository().findAllByTaskIdOrderByUpdatedDesc(task.getId());
+        LocalDateTime startTime = null;
+        LocalDateTime endTime = null;
+
+        for (Activity activity : activities) {
+            if (activity.getStatusCode().equals(startStatus) && startTime == null) {
+                startTime = activity.getUpdated();
+            } else if (activity.getStatusCode().equals(endStatus) && startTime == null) {
+                endTime = activity.getUpdated();
+            }
+        }
+
+        if (startTime != null && endTime != null) {
+            return Duration.between(startTime, endTime).toMinutes();
+        } else {
+            throw new IllegalStateException("Start time or end time is null");
+        }
     }
 }
