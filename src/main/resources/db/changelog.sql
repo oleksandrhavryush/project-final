@@ -330,9 +330,3 @@ values ('todo', 'ToDo', 3, 'in_progress,canceled|'),
 
 drop index UK_USER_BELONG;
 create unique index UK_USER_BELONG on USER_BELONG (OBJECT_ID, OBJECT_TYPE, USER_ID, USER_TYPE_CODE) where ENDPOINT is null;
-
--- Adding entries to the ACTIVITY table
-INSERT INTO ACTIVITY (ID, AUTHOR_ID, TASK_ID, UPDATED, STATUS_CODE)
-VALUES (7, 6, 1, '2024-05-07 09:00:00', 'in_progress'),      -- start time of task work
-       (8, 6, 1, '2024-05-07 12:00:00', 'ready_for_review'), -- end time of development
-       (9, 6, 1, '2024-05-07 15:00:00', 'done'); -- end time of testing
