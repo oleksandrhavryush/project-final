@@ -24,4 +24,3 @@ All tasks have been successfully completed. The system is now more secure, effic
 2. Run a local PostgreSQL server. I recommend doing this through Docker.
 3. Build the project using `mvn clean install`.
 4. Run the Spring Boot application (`JiraRushApplication`) with the `prod` profile.
-5. Enjoy!
